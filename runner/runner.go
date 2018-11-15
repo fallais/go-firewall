@@ -45,30 +45,46 @@ func (runner *Runner) Run() {
 		if !firewall.IsEnabled {
 			logrus.WithFields(logrus.Fields{
 				"firewall_name": firewall.Name,
-			}).Infoln("The firewall is disabled, skipping.")
+			}).Infoln("The firewall is disabled, skipping")
 			continue
 		}
 
-		// Collect and save
-		err := collectAndSave(firewall)
+		// Collect
+		err := collect(firewall)
 		if err != nil {
 			logrus.WithFields(logrus.Fields{
 				"firewall_name": firewall.Name,
-			}).Errorln("Error while collecting and saving the firewall :", err)
+			}).Errorln("Error while collecting the firewall :", err)
+			continue
+		}
+
+		// Seve
+		err = save(firewall)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"firewall_name": firewall.Name,
+			}).Errorln("Error while saving the firewall :", err)
+			continue
+		}
+
+		// Parse
+		err = parse(firewall)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"firewall_name": firewall.Name,
+			}).Errorln("Error while parsing the firewall :", err)
 			continue
 		}
 	}
 
-	logrus.Infoln("Successfully run the jobs")
+	logrus.Infoln("Successfully collected and saved all the firewalls")
 }
 
 //------------------------------------------------------------------------------
 // Helpers
 //------------------------------------------------------------------------------
 
-func collectAndSave(f *shared.Firewall) error {
-	logrus.Infoln("Adding running job")
-
+func collect(f *shared.Firewall) error {
 	var firewall connectors.Firewall
 	var err error
 	switch f.Type {
@@ -99,5 +115,13 @@ func collectAndSave(f *shared.Firewall) error {
 	// Save the configuration
 	//
 
+	return nil
+}
+
+func save(f *shared.Firewall) error {
+	return nil
+}
+
+func parse(f *shared.Firewall) error {
 	return nil
 }
