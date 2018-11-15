@@ -112,9 +112,6 @@ func collect(f *shared.Firewall) error {
 
 	logrus.Infoln(conf)
 
-	// Save the configuration
-	//
-
 	return nil
 }
 
