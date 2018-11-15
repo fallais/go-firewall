@@ -35,7 +35,7 @@ func NewRunner(configuration *shared.Config) *Runner {
 // Functions
 //------------------------------------------------------------------------------
 
-// Run collects and saves all firewall configuration
+// Run collects and saves all firewall configurations
 func (runner *Runner) Run() {
 	logrus.Infoln("Collecting and saving all firewalls")
 
@@ -58,7 +58,7 @@ func (runner *Runner) Run() {
 			continue
 		}
 
-		// Seve
+		// Save
 		err = save(firewall)
 		if err != nil {
 			logrus.WithFields(logrus.Fields{
