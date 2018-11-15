@@ -1,6 +1,8 @@
 package cisco
 
 import (
+	"time"
+	
 	"golang.org/x/crypto/ssh"
 )
 
@@ -8,8 +10,9 @@ import (
 func NewSSHClient(host, user, password string) (*ssh.Client, error) {
 	// Create the SSH configuration
 	sshConfig := &ssh.ClientConfig{
-		User: user,
-		Auth: []ssh.AuthMethod{ssh.Password(password)},
+		User:    user,
+		Auth:    []ssh.AuthMethod{ssh.Password(password)},
+		Timeout: 5 * time.Second,
 	}
 
 	// Set the callback
