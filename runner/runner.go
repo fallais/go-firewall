@@ -6,6 +6,7 @@ import (
 	"go-firewall/connectors"
 	"go-firewall/connectors/checkpoint"
 	"go-firewall/connectors/cisco"
+	"go-firewall/metrics"
 	"go-firewall/shared"
 
 	"github.com/sirupsen/logrus"
@@ -38,6 +39,9 @@ func NewRunner(configuration *shared.Config) *Runner {
 // Run collects and saves all firewall configurations
 func (runner *Runner) Run() {
 	logrus.Infoln("Collecting and saving all firewalls")
+
+	// Metrics the number of firewalls
+	metrics.SetFirewallsCount(float64(len(runner.configuration.Firewalls)))
 
 	// Process all the firewalls
 	for _, firewall := range runner.configuration.Firewalls {
