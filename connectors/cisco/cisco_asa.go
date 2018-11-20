@@ -36,7 +36,7 @@ func NewCiscoASA(hostname, username, password string) (connectors.Firewall, erro
 	}
 
 	// Create the SSH client
-	client, err := NewSSHClient(firewall.hostname, firewall.username, firewall.password)
+	client, err := connectors.NewSSHClient(firewall.hostname, firewall.username, firewall.password)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to create client: %s", err)
 	}
